@@ -1,9 +1,11 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
-import testReducer from "./reducers/test"
+import restaurants from "./reducers/restaurantsReducer";
+import selectedRestaurant from "./reducers/selectedRestaurantReducer";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
-    testReducer
+    restaurants,
+    selectedRestaurant
 })
 
 const configureStore = () => {

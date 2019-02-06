@@ -2,7 +2,10 @@ import React from "react";
 import {TextInput, View, StyleSheet} from "react-native";
 
 export default (props) => (
-    <TextInput placeholder={props.placeholder} style={styles.input}/>
+    <TextInput
+
+        onChangeText={value=>props.onChangeText(value)}
+        placeholder={props.placeholder} style={styles.input}/>
 )
 
 const styles = StyleSheet.create({

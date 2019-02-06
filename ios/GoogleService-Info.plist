@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>522197082958-t34ja3m7ijvr52dp9eip6iesiborsbbr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.522197082958-t34ja3m7ijvr52dp9eip6iesiborsbbr</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDi4WopOuQeSCOSp8i6zZKCbBeLJtVZQdA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>522197082958</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.MapApp</string>
+	<key>PROJECT_ID</key>
+	<string>white-imprint-202116</string>
+	<key>STORAGE_BUCKET</key>
+	<string>white-imprint-202116.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:522197082958:ios:d05109a23c31fad8</string>
+	<key>DATABASE_URL</key>
+	<string>https://white-imprint-202116.firebaseio.com</string>
+</dict>
+</plist>
