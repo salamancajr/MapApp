@@ -3,6 +3,9 @@ package com.mapapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.mapbox.rctmgl.RCTMGLPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -26,6 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGoogleSigninPackage(),
+            new FBSDKPackage(),
+            new RNFirebasePackage(),
             new RCTMGLPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage()
