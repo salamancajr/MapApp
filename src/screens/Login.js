@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {View, Text, StyleSheet, ImageBackground} from "react-native"
 import CustomInput from "../components/CustomInput";
 import CustomLongButton from "../components/CustomLongButton";
-import firebase from "react-native-firebase";
+//import firebase from "react-native-firebase";
 export default class Login extends Component{
 
     state={
