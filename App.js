@@ -26,16 +26,25 @@ const Stack = createStackNavigator({
             )
         }
     }},
-    MapScreen:{screen:MapScreen, navigationOptions:{
-        headerTitle:"Map",
-        headerStyle:{
-            backgroundColor:"black"
-        },
-        headerTitleStyle:{
-            color:"white"
-        },
+    MapScreen:{screen:MapScreen, navigationOptions:({navigation})=>{
+        return {
+            headerTitle:"Map",
+            headerStyle:{
+                backgroundColor:"black"
+            },
+            headerTitleStyle:{
+                color:"white"
+            },
+            headerLeft:(
+                <TouchableOpacity onPress={()=>navigation.goBack()}>
+                    <Text style={{marginLeft:10, color:"white"}}>
+                        Logout
+                    </Text>
+                </TouchableOpacity>
+            )
+        }}
+        }
 
-    }}
 
 })
 

@@ -83,8 +83,8 @@ export default class Login extends Component{
                 {this.state.hasAccount?"Don't have an account?":"Already have an account?"}
             </Text>
             <Button title={this.state.hasAccount?"Sign Up":"Sign In"} onPress={
-                ()=>this.props.navigation.navigate("MapScreen")
-                //this.handleAccountStatus
+                //()=>this.props.navigation.navigate("MapScreen")
+                this.handleAccountStatus
                 }/>
         </View>
     </ImageBackground>
