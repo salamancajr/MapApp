@@ -3,7 +3,7 @@ import {View, TouchableOpacity, Text} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { withNavigation } from 'react-navigation';
 import firebase from "react-native-firebase";
-//import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from 'react-native-google-signin';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 class DrawerContentComponent extends Component{
@@ -46,6 +46,26 @@ class DrawerContentComponent extends Component{
 
     }
 
+    handleGoogleSignIn = async () => {
+        try {
+            // Add any configuration settings here:
+            await GoogleSignin.configure();
+
+            const data = await GoogleSignin.signIn();
+
+            // create a new firebase credential with the token
+            const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
+            // login with credential
+            firebase.auth().signInWithCredential(credential).then(()=>{
+                this.props.navigation.navigate("MapScreen")
+
+            });
+
+          } catch (e) {
+            console.error(e);
+          }
+    }
+
     render(){
 
         return(
@@ -59,7 +79,9 @@ class DrawerContentComponent extends Component{
                         Log In with Facebook
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{paddingVertical:15, width:"90%", flexDirection:"row", alignItems:"center"}}>
+                <TouchableOpacity
+                    style={{paddingVertical:15, width:"90%", flexDirection:"row", alignItems:"center"}}
+                    onPress={this.handleGoogleSignIn}>
                 <Icon name="google--with-circle" size={30} color="blue"/>
                     <Text>
                         Log In with Google

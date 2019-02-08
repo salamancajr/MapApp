@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "522197082958",
+    "firebase_url": "https://white-imprint-202116.firebaseio.com",
+    "project_id": "white-imprint-202116",
+    "storage_bucket": "white-imprint-202116.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522197082958:android:fb8d5a600cf3fb33",
+        "android_client_info": {
+          "package_name": "com.mapapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522197082958-miivchic91v70k2qim51cko146tiei8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU1D86ewq25vPT7FK6HGIrJSIHW9rb2Gk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

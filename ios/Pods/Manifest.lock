@@ -5,9 +5,22 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - FacebookSDK (4.38.0):
+    - Bolts (~> 1.9)
+    - FacebookSDK/CoreKit (= 4.38.0)
+    - FacebookSDK/MarketingKit (= 4.38.0)
+  - FacebookSDK/CoreKit (4.38.0):
+    - Bolts (~> 1.9)
+    - FBSDKCoreKit
+  - FacebookSDK/MarketingKit (4.38.0):
+    - Bolts (~> 1.9)
+    - FacebookSDK/CoreKit
+    - FBSDKMarketingKit
   - FBSDKCoreKit (4.40.0):
     - Bolts (~> 1.9)
   - FBSDKLoginKit (4.40.0):
+    - FBSDKCoreKit
+  - FBSDKMarketingKit (4.38.0):
     - FBSDKCoreKit
   - FBSDKShareKit (4.40.0):
     - FBSDKCoreKit
@@ -100,24 +113,24 @@ PODS:
     - React
   - React/Core (0.56.0):
     - yoga (= 0.56.0.React)
-  - RNGoogleSignin (1.1.0):
-    - GoogleSignIn
-    - React
   - yoga (0.56.0.React)
 
 DEPENDENCIES:
+  - FacebookSDK
   - Firebase/Auth
   - Firebase/Core (= 5.15.0)
+  - GoogleSignIn (~> 4.4.0)
   - React (from `../node_modules/react-native`)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
-  - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
+    - FacebookSDK
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FBSDKMarketingKit
     - FBSDKShareKit
     - Firebase
     - FirebaseAnalytics
@@ -137,15 +150,15 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
-  RNGoogleSignin:
-    :path: "../node_modules/react-native-google-signin"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  FacebookSDK: 73f54b8b94e09b05647cdef0af147f470cd3edc6
   FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
   FBSDKLoginKit: 7a1e411d46acc8834588eca437daf34de42e1d52
+  FBSDKMarketingKit: e609f39d74ab273cf52e2f8b7e8829ed412b2827
   FBSDKShareKit: 0e45916f4150da485928ae2a17ca021950b194f5
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
@@ -161,9 +174,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   React: bdb39c05e2eed10a43056cff89a68bc9ebe7f232
   react-native-fbsdk: 5c3ff4dda057e17d3b4b5491033fc653d423e71d
-  RNGoogleSignin: bd1b65d312b696ad5522c08b693aa1abf19b96f2
   yoga: 2418c171de153cbe3c94dc28c3bf691b1695ae17
 
-PODFILE CHECKSUM: 039bbfdb0243a975c59979e04b5b2429f9c63a67
+PODFILE CHECKSUM: 990426a7fe2fa51f79a315a7ecdf6c9a1bcc21e3
 
 COCOAPODS: 1.6.0
