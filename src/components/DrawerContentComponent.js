@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import {View, TouchableOpacity, Text} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { withNavigation } from 'react-navigation';
-//import firebase from "react-native-firebase";
+import firebase from "react-native-firebase";
 //import { GoogleSignin } from 'react-native-google-signin';
-//import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 class DrawerContentComponent extends Component{
 
@@ -30,10 +30,12 @@ class DrawerContentComponent extends Component{
 
             // create a new firebase credential with the token
             const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+            console.log('credential', firebase.auth().signInWithCredential);
 
             // login with credential
            // const firebaseUserCredential = await
             firebase.auth().signInWithCredential(credential).then(()=>{
+                console.log('hey');
 
                 this.props.navigation.navigate("MapScreen")
 
