@@ -36,6 +36,7 @@ const Stack = createStackNavigator({
         },
 
     }}
+
 })
 
 const App = createDrawerNavigator({

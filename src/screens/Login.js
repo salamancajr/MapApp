@@ -13,6 +13,7 @@ export default class Login extends Component{
     }
 
     handleSignUp = () => {
+            console.log('hello');
 
             if(emailValidator.test(this.state.email) && this.state.password.length>5 && this.state.password == this.state.confirmPassword){
                 firebase.auth()
@@ -41,6 +42,8 @@ export default class Login extends Component{
                 return this.props.navigation.navigate("MapScreen")
             })
             .catch(error=>{
+                console.log('errror', error);
+
                 alert(error)
             })
 
@@ -79,7 +82,10 @@ export default class Login extends Component{
             <Text style={{color:"white"}}>
                 {this.state.hasAccount?"Don't have an account?":"Already have an account?"}
             </Text>
-            <Button title={this.state.hasAccount?"Sign Up":"Sign In"} onPress={this.handleAccountStatus}/>
+            <Button title={this.state.hasAccount?"Sign Up":"Sign In"} onPress={
+                ()=>this.props.navigation.navigate("MapScreen")
+                //this.handleAccountStatus
+                }/>
         </View>
     </ImageBackground>
         )

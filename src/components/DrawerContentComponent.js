@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import {View, TouchableOpacity, Text} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { withNavigation } from 'react-navigation';
-import firebase from "react-native-firebase";
-import { GoogleSignin } from 'react-native-google-signin';
-import { AccessToken, LoginManager } from 'react-native-fbsdk';
+//import firebase from "react-native-firebase";
+//import { GoogleSignin } from 'react-native-google-signin';
+//import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 class DrawerContentComponent extends Component{
 

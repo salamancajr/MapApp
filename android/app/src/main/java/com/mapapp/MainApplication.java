@@ -1,12 +1,11 @@
 package com.mapapp;
 
 import android.app.Application;
-
+import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
-import co.apptailor.googlesignin.RNGoogleSigninPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import com.mapbox.rctmgl.RCTMGLPackage;
 import com.mapbox.rctmgl.RCTMGLPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -29,11 +28,10 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
+        new ImagePickerPackage(),
           new MainReactPackage(),
             new RNFirebasePackage(),
-            new RNGoogleSigninPackage(),
-            new FBSDKPackage(),
-            new RNFirebasePackage(),
+            new RNFirebaseAuthPackage(),
             new RCTMGLPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage()
