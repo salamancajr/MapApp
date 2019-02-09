@@ -57,3 +57,5 @@ buck-out/
 start.command
 
 android/app/google-services.json
+src/utils/accessToken.js
+src/utils/apiKey.js
