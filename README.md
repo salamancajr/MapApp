@@ -1,9 +1,9 @@
 ## Setup
-* create a file in `scr/utils` name it `accessToken.js` and add `export default`[mappbox-access-token]
+* Create a file in `scr/utils`, name it `accessToken.js` and add `export default`[mappbox-access-token]
+
+* Create a file in `scr/utils`, name it `apiKey.js` and add `export default`[API_KEY]. Make sure your account key has permissions to use the Google places API enabled.
 
 * Obtain the `google-services.json` file and place it in `android/app`
-
-* reate a file in `scr/utils` name it `apiKey.js` and add `export default`[API_KEY]. Make sure your account key has permissions to use the Google places API enabled.
 
 
 
