@@ -7,6 +7,12 @@ import com.facebook.appevents.AppEventsLogger;
 import android.app.Application;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.imagepicker.ImagePickerPackage;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import com.mapbox.rctmgl.RCTMGLPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
@@ -41,6 +47,12 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
         new ImagePickerPackage(),
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new ImagePickerPackage(),
+            new RNGoogleSigninPackage(),
+            new RNGestureHandlerPackage(),
+            new RNFirebasePackage(),
+            new RCTMGLPackage(),
           ///////////////////////
             //new FBSDKPackage(),
             new FBSDKPackage(mCallbackManager),

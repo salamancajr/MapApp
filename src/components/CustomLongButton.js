@@ -5,7 +5,7 @@ export default (props) => (
     <TouchableOpacity onPress={()=>props.onPress()} style={styles.button
     }>
         <Text style={styles.buttonText}>
-            Button
+            Submit
         </Text>
     </TouchableOpacity>
 )

@@ -13,8 +13,6 @@ export default class Login extends Component{
     }
 
     handleSignUp = () => {
-            console.log('hello');
-
             if(emailValidator.test(this.state.email) && this.state.password.length>5 && this.state.password == this.state.confirmPassword){
                 firebase.auth()
                 .createUserWithEmailAndPassword(this.state.email, this.state.password)

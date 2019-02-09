@@ -1,5 +1,4 @@
-export const saveInFirebase = (image, coords) => {
-    console.log('image', image.data);
+export const saveInFirebase = (image, coords, cb) => {
 
     return dispatch => {
 
@@ -14,7 +13,7 @@ export const saveInFirebase = (image, coords) => {
                     method:"POST",
                     "Content-type":"application/json",
                     body:JSON.stringify({coordinates:coords, image:resParsed.imageUrl})
-                }).then(res=>console.log('res', res)
+                }).then(res=>cb()
                 )
         })
     }

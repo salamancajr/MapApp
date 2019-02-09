@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import {View, TouchableOpacity, Text} from "react-native";
+import {View, TouchableOpacity, Text, StyleSheet} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { withNavigation } from 'react-navigation';
 import firebase from "react-native-firebase";
-//import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from 'react-native-google-signin';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 class DrawerContentComponent extends Component{
@@ -30,15 +30,10 @@ class DrawerContentComponent extends Component{
 
             // create a new firebase credential with the token
             const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-            console.log('credential', firebase.auth().signInWithCredential);
-
             // login with credential
            // const firebaseUserCredential = await
             firebase.auth().signInWithCredential(credential).then(()=>{
-                console.log('hey');
-
                 this.props.navigation.navigate("MapScreen")
-
             });
 
             //console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()))
@@ -71,21 +66,20 @@ class DrawerContentComponent extends Component{
     render(){
 
         return(
-            <View style={{marginTop:20, alignItems:"center"}}>
+            <View style={{marginTop:50, alignItems:"center"}}>
                 <TouchableOpacity
-                    style={{paddingVertical:15, width:"90%",flexDirection:"row", alignItems:"center"}}
+                    style={styles.loginButtons}
                     onPress={this.handleFacebookSignIn}>
-                <Icon name="facebook-with-circle" size={30} color="blue"/>
-
-                    <Text>
+                <Icon name="facebook-with-circle" size={25} color="blue"/>
+                    <Text style={{paddingLeft:10}}>
                         Log In with Facebook
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{paddingVertical:15, width:"90%", flexDirection:"row", alignItems:"center"}}
+                    style={styles.loginButtons}
                     onPress={this.handleGoogleSignIn}>
-                <Icon name="google--with-circle" size={30} color="blue"/>
-                    <Text>
+                <Icon name="google--with-circle" size={25} color="blue"/>
+                    <Text style={{paddingLeft:10}}>
                         Log In with Google
                     </Text>
                 </TouchableOpacity>
@@ -93,5 +87,14 @@ class DrawerContentComponent extends Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+    loginButtons:{
+        paddingVertical:15,
+        width:"90%",
+        flexDirection:"row",
+        alignItems:"center"
+    }
+})
 
 export default withNavigation(DrawerContentComponent)

@@ -1,12 +1,13 @@
 import React, {Component} from "react";
-import {getRestaurants, getRestaurantInfo, saveInFirebase, getPinnedImages} from "../store/actions"
-import {View, Text, Image, StyleSheet, Animated, Dimensions, Button, TouchableOpacity, Platform, Linking, TouchableWithoutFeedback} from "react-native";
+import {fetchVenueImage, getRestaurants, getRestaurantInfo, saveInFirebase, getPinnedImages} from "../store/actions"
+import {View, Text, Image, StyleSheet, Animated, Dimensions, TouchableOpacity, Platform, Linking, TouchableWithoutFeedback} from "react-native";
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
-import API_KEY from "../utils/apiKey";
 import ImagePicker from "react-native-image-picker";
-Mapbox.setAccessToken('pk.eyJ1IjoiZ2Vvcmdlc2pyIiwiYSI6ImNqcnJmYWN5ODF6YTU0NWw5NGZncDg2azgifQ.L1BZceO57uXG5DfzB_LZ-w');
+import accessToken from "../utils/accessToken";
+Mapbox.setAccessToken(accessToken);
+console.disableYellowBox = true;
 
 class Map extends Component{
 
@@ -36,13 +37,9 @@ class Map extends Component{
                 toValue:0.1
             }).start()
         })
-
-
-        fetch(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image}&key=${API_KEY}`).then((image)=>{
-
         console.ignoredYellowBox = ['Warning:'];
-        return this.setState({image:image.url, name, rating, coordinates:{lat, lng}})}).catch(e=>console.log('e', e)
-        )
+        this.props.fetchVenueImage(image, imageResponse=>this.setState({image:imageResponse.url, name, rating, coordinates:{lat, lng}}))
+
     }
     handleClose = () => (
         Animated.timing(this.state.translateY, {
@@ -53,29 +50,30 @@ class Map extends Component{
 
     renderAnnotations () {
         return(
-            this.props.restaurants&&this.props.restaurants.map(restaurant=>{
-
-            return (
-                <TouchableOpacity
-                    key={restaurant.placeId}
-                    onPress={()=>this.handlePress(restaurant)}>
-                    <Mapbox.PointAnnotation
-                        id={restaurant.name}
-                        coordinate={[restaurant.lng, restaurant.lat]}>
-                        <View style={{width:30, height:30, borderWidth:1, borderColor:"blue",justifyContent:"center", alignItems:"center", borderRadius:50, backgroundColor:"white"}}>
-                            <Icon name="ios-restaurant" size={20}
-                            color="blue"/>
-                        </View>
-                    </Mapbox.PointAnnotation>
-                </TouchableOpacity>
-            )
-        }))
-
-
+            this.props.restaurants&&
+            this.props.restaurants.map(restaurant=>{
+                return (
+                    <TouchableOpacity
+                        key={restaurant.placeId}
+                        onPress={()=>this.handlePress(restaurant)}>
+                        <Mapbox.PointAnnotation
+                            id={restaurant.name}
+                            coordinate={[restaurant.lng, restaurant.lat]}>
+                            <View style={styles.venueMarker}>
+                                <Icon name="ios-restaurant" size={20}
+                                color="blue"/>
+                            </View>
+                        </Mapbox.PointAnnotation>
+                    </TouchableOpacity>
+                )
+            })
+        )
     }
 
 
       renderPinnedImages () {
+          console.log("pinned", this.props.pinnedImages);
+
         return(
             this.props.pinnedImages&&this.props.pinnedImages.map(pinnedImage=>{
 
@@ -85,7 +83,7 @@ class Map extends Component{
                         key={pinnedImage.id}
                         id='pointAnnotation'
                         coordinate={[pinnedImage.coordinates.longitude, pinnedImage.coordinates.latitude]}>
-                        <Image source={{uri:pinnedImage.image}} style={{width:80, height:80, borderWidth:1, borderColor:"blue", borderRadius:40}}/>
+                        <Image source={{uri:pinnedImage.image}} style={styles.pinnedImages}/>
                     </Mapbox.PointAnnotation>
 
             )
@@ -113,7 +111,9 @@ class Map extends Component{
                 this.setState({cameraImage:res.uri})
                 navigator.geolocation.getCurrentPosition(pos => {
                     let {latitude, longitude} = pos.coords;
-                    this.props.saveInFirebase(res, {latitude, longitude})
+                    console.log(latitude, longitude );
+
+                    this.props.saveInFirebase(res, {latitude, longitude}, ()=>this.props.getPinnedImages())
                 })
             }
         })
@@ -132,29 +132,28 @@ class Map extends Component{
                         {this.renderPinnedImages()}
                     </Mapbox.MapView>
                 </TouchableWithoutFeedback>
-                <View style={{backgroundColor:"red"}} coordinate={[-73.935242, 40.730610]}></View>
-                <Animated.View style={{height:"50%", position:"absolute", top:"50%", width:"100%", backgroundColor:"black", borderTopWidth:2, borderTopColor:"grey",  transform:[{translateY:this.state.translateY}]}}>
-
-                    <Image source={{uri:this.state.icon}} style={{width:30, height:30, position:"absolute", left:"50%", top:5, transform:[{translateX:-15}]}}/>
-                    <View style={{
-                        width:"90%",
-                        alignSelf:"center",
-                        flexDirection:"row", justifyContent:"space-around", alignContent:"center",
-                        borderRadius:10,
-                        borderWidth:2,
-                        borderColor:"white",
-                        marginTop:45,
-                        marginBottom:15,
-                        paddingVertical:15}}>
+                <View
+                    style={{backgroundColor:"red"}}
+                    coordinate={[-73.935242, 40.730610]}>
+                </View>
+                <Animated.View
+                    style={[
+                        styles.slider,
+                        {transform:[{translateY:this.state.translateY}]}
+                    ]}>
+                    <Image
+                        source={{uri:this.state.icon}}
+                        style={styles.sliderIcon}/>
+                    <View style={styles.sliderContentContainer}>
                     <View style={{justifyContent:"space-around"}}>
                         <Text style={{color:"white", fontSize:20}}>
                             {this.state.name}
                         </Text>
-                        <Text style={{color:"white", fontSize:17}}>
+                        <Text style={styles.sliderContentText}>
                             Rating: {this.state.rating}
                         </Text>
                         <TouchableOpacity onPress={this.linkToDirections}>
-                        <Text style={{color:"white", fontSize:17}}>
+                        <Text style={styles.sliderContentText}>
                         Click here for directions
                         </Text>
                         </TouchableOpacity>
@@ -162,19 +161,18 @@ class Map extends Component{
                     <Image source={{uri:this.state.image}} style={{width:100, height:80, borderRadius:10}}/>
 
                     </View>
-                    <Text style={{width:"90%",color:"white", alignSelf:"center"}}>
+                    <Text style={styles.reviewText}>
                         {this.props.selectedRestaurant.result&&this.props.selectedRestaurant.result.reviews[0].text}
                     </Text>
 
                 </Animated.View>
                 <TouchableOpacity
                     onPress={this.takePhoto}
-                    style={{position:"absolute", top:10, right:10,borderRadius:50, width:60, height:60, backgroundColor:"white", justifyContent:"center", alignItems:"center"}}>
+                    style={styles.cameraButton}>
                     <Icon
                         name="md-camera"
                         size={40}
                         color="blue"
-                        //style={{top:"50%", left:"50%", position:"absolute", transform:[{translateX:-20}, {translateY:-20}]}}
                         />
                 </TouchableOpacity>
             </View>
@@ -186,13 +184,77 @@ class Map extends Component{
 const styles = StyleSheet.create({
     container:{
         flex:1
+    },
+    venueMarker:{
+        width:30,
+        height:30,
+        borderWidth:1,
+        borderColor:"blue",
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius:50,
+        backgroundColor:"white"
+    },
+    cameraButton:{
+        position:"absolute",
+        top:10,
+        right:10,
+        borderRadius:50,
+        width:60,
+        height:60,
+        backgroundColor:"white",
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    reviewText:{
+        width:"90%",
+        color:"white",
+        alignSelf:"center"
+    },
+    sliderContentText:{
+        color:"white",
+        fontSize:17
+    },
+    sliderContentContainer:{
+        width:"90%",
+        alignSelf:"center",
+        flexDirection:"row",
+        justifyContent:"space-around",
+        alignContent:"center",
+        borderRadius:10,
+        borderWidth:2,
+        borderColor:"white",
+        marginTop:45,
+        marginBottom:15,
+        paddingVertical:15
+    },
+    sliderIcon:{
+        width:30,
+        height:30,
+        position:"absolute",
+        left:"50%",
+        top:5,
+        transform:[{translateX:-15}]
+    },
+    slider:{
+        height:"50%",
+        position:"absolute",
+        top:"50%",
+        width:"100%",
+        backgroundColor:"black",
+        borderTopWidth:2,
+        borderTopColor:"grey"
+    },
+    pinnedImages:{
+        width:80,
+        height:80,
+        borderWidth:1,
+        borderColor:"blue",
+        borderRadius:40
     }
 })
 
 const mapStateToProps = (state) => {
-    console.log('state', state.pinnedImages);
-
-
     let restaurants = state.restaurants&&state.restaurants.map(restaurant=>{
         return {
             ...restaurant.geometry.location, placeId:restaurant.place_id,
@@ -211,4 +273,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect (mapStateToProps, {getRestaurants, getRestaurantInfo, saveInFirebase, getPinnedImages})(Map)
+export default connect (mapStateToProps, {getRestaurants, getRestaurantInfo, saveInFirebase, getPinnedImages, fetchVenueImage})(Map)
