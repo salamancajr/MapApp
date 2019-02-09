@@ -72,7 +72,6 @@ class Map extends Component{
 
 
       renderPinnedImages () {
-          console.log("pinned", this.props.pinnedImages);
 
         return(
             this.props.pinnedImages&&this.props.pinnedImages.map(pinnedImage=>{

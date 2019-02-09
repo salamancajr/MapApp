@@ -5,20 +5,15 @@ import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 //////////////////////////////////
 import android.app.Application;
-import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import io.invertase.firebase.RNFirebasePackage;
 import com.mapbox.rctmgl.RCTMGLPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
-import com.mapbox.rctmgl.RCTMGLPackage;
-import com.mapbox.rctmgl.RCTMGLPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -45,14 +40,10 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-        new ImagePickerPackage(),
           new MainReactPackage(),
             new VectorIconsPackage(),
             new ImagePickerPackage(),
             new RNGoogleSigninPackage(),
-            new RNGestureHandlerPackage(),
-            new RNFirebasePackage(),
-            new RCTMGLPackage(),
           ///////////////////////
             //new FBSDKPackage(),
             new FBSDKPackage(mCallbackManager),
@@ -60,8 +51,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(),
             new RCTMGLPackage(),
-            new RNGestureHandlerPackage(),
-            new VectorIconsPackage()
+            new RNGestureHandlerPackage()
       );
     }
 

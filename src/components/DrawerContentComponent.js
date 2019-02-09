@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import { withNavigation } from 'react-navigation';
 import firebase from "react-native-firebase";
 import { GoogleSignin } from 'react-native-google-signin';
-import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 class DrawerContentComponent extends Component{
 
@@ -18,10 +18,9 @@ class DrawerContentComponent extends Component{
                 return;
             }
 
-            console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
-
             // get the access token
             const data = await AccessToken.getCurrentAccessToken();
+            console.log('data', data);
 
             if (!data) {
             // handle this however suites the flow of your app
@@ -30,15 +29,37 @@ class DrawerContentComponent extends Component{
 
             // create a new firebase credential with the token
             const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-            // login with credential
-           // const firebaseUserCredential = await
-            firebase.auth().signInWithCredential(credential).then(()=>{
-                this.props.navigation.navigate("MapScreen")
-            });
 
-            //console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()))
+            const responseInfoCallback = (error, result) => {
+                if (error) {
+                  console.log(error)
+                  alert('Error fetching facebook data');
+                } else {
+                  console.log(result)
+                  firebase.auth().signInWithCredential(credential).then(()=>{
+                    this.props.navigation.navigate("MapScreen", {email:result.email})
+                })
+                .catch(e=>alert(e));
+                }
+              }
+
+            const infoRequest = new GraphRequest(
+                '/me',
+                {
+                  accessToken: data.accessToken,
+                  parameters: {
+                    fields: {
+                      string: 'email,name,first_name,middle_name,last_name'
+                    }
+                  }
+                },
+                responseInfoCallback
+              );
+
+              // Start the graph request.
+            new GraphRequestManager().addRequest(infoRequest).start()
         } catch (e) {
-            console.error(e);
+            alert(e);
         }
 
     }
@@ -54,13 +75,13 @@ class DrawerContentComponent extends Component{
             const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
             // login with credential
             firebase.auth().signInWithCredential(credential).then(()=>{
-                this.props.navigation.navigate("MapScreen")
+                this.props.navigation.navigate("MapScreen", {email:data.user.email})
 
-            });
+            }).catch(e=>alert(e));
 
-          } catch (e) {
-            console.error(e);
-          }
+        } catch (e) {
+            alert(e);
+        }
     }
 
     render(){

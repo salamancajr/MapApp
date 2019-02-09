@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "sh shell/start.sh 8081",
-    "test": "jest"
+    "test": "jest",
+    "emulator": "emulator @Nexus_5X_API_28"
   },
   "dependencies": {
     "@mapbox/react-native-mapbox-gl": "^6.1.3",
