@@ -1,1 +1,0 @@
-export default 'pk.eyJ1IjoiZ2Vvcmdlc2pyIiwiYSI6ImNqcnJmYWN5ODF6YTU0NWw5NGZncDg2azgifQ.L1BZceO57uXG5DfzB_LZ-w'
