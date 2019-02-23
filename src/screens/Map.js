@@ -20,12 +20,17 @@ class Map extends Component{
         rating:"",
         cameraImage:""
     }
+    email = "";
 
     componentDidMount(){
-        this.props.getPinnedImages()
         this.props.getRestaurants()
+        let email = this.props.navigation.getParam("email")
+        this.email = email.split("@")[0];
+        this.props.getPinnedImages(email.split("@")[0])
 
     }
+
+
 
     handlePress = (restaurant) => {
         let {icon, image, name, placeId, lat, lng, rating} = restaurant;
@@ -74,19 +79,18 @@ class Map extends Component{
       renderPinnedImages () {
 
         return(
-            this.props.pinnedImages&&this.props.pinnedImages.map(pinnedImage=>{
+            this.props.pinnedImages.length?this.props.pinnedImages.map(pinnedImage=>{
 
             return (
-
-                    <Mapbox.PointAnnotation
-                        key={pinnedImage.id}
-                        id='pointAnnotation'
-                        coordinate={[pinnedImage.coordinates.longitude, pinnedImage.coordinates.latitude]}>
-                        <Image source={{uri:pinnedImage.image}} style={styles.pinnedImages}/>
-                    </Mapbox.PointAnnotation>
+                <Mapbox.PointAnnotation
+                    key={pinnedImage.id}
+                    id='pointAnnotation'
+                    coordinate={[pinnedImage.coordinates.longitude, pinnedImage.coordinates.latitude]}>
+                    <Image source={{uri:pinnedImage.image}} style={styles.pinnedImages}/>
+                </Mapbox.PointAnnotation>
 
             )
-        }))
+        }):null)
     }
 
     linkToDirections = () => {
@@ -112,7 +116,7 @@ class Map extends Component{
                     let {latitude, longitude} = pos.coords;
                     console.log(latitude, longitude );
 
-                    this.props.saveInFirebase(res, {latitude, longitude}, ()=>this.props.getPinnedImages())
+                    this.props.saveInFirebase(res, this.email, {latitude, longitude}, ()=>this.props.getPinnedImages(this.email))
                 })
             }
         })
